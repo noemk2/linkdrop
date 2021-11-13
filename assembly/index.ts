@@ -70,6 +70,7 @@ export function send(public_key: Base58PublicKey): void {
 	//nonce: u64 = 0
 
 	const current_account_id = context.contractName
+	//const current_account_id = context.sender
 	ContractPromiseBatch.create(current_account_id) //act on this contract
 		.add_access_key( //add a key to allow calling us to claim the linkdrop
 			// agregue una clave para permitirnos llamarnos para reclamar el linkdrop 
@@ -90,9 +91,12 @@ export function send(public_key: Base58PublicKey): void {
  */
 export function claim(account_id: AccountId): void {
 	const current_account_id = context.contractName
+	//const current_account_id = context.sender
 	const signer_account_pk = context.senderPublicKey
+	logging.log(context.contractName)
 
-	assert(context.predecessor == current_account_id, "Claim only can come from this account")
+	//assert(context.predecessor == current_account_id, "Claim only can come from this account")
+	//assert(context.predecessor == current_account_id, "Claim only can come from this account: " + current_account_id)
 	assert(env.isValidAccountID(account_id), "Invalid account id")
 
 	//get near amount associated with this linkdrop
